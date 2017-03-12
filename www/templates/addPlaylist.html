@@ -1,24 +1,18 @@
 <ion-view view-title="Adicionar Playlist">
 	<ion-content>
-<!-- "_id": "string",
-"title": "string",
-"creator": {
-"_id": "string",
-"name": "string",
-"email": "string" -->
-		<form name="newPlaylist" ng-submit="newPlaylist.$valid && addPlaylist(newPlaylist)" novalidate>
+		<form name="newPlaylistForm" novalidate>
 			<div class="list">
 				<label class="item item-input item-floating-label">
 					<span class="input-label">Nome da Playlist</span>
-					<input type="text" placeholder="Nome da Playlist" ng-mode="newPlaylist.title">
+					<input type="text" placeholder="Nome da Playlist" ng-model="newPlaylist.title" required>
 				</label>
 				<label class="item item-input item-floating-label">
 					<span class="input-label">Seu Nome Aqui</span>
-					<input type="text" placeholder="Seu Nome Aqui" ng-model="newPlaylist.creator.name">
+					<input type="text" placeholder="Seu Nome Aqui" ng-model="newPlaylist.creator.name" required>
 				</label>
 				<label class="item item-input item-floating-label">
 					<span class="input-label">Seu Email</span>
-					<input type="email" placeholder="Seu Email" ng-model="newPlaylist.creator.email">
+					<input type="email" placeholder="Seu Email" ng-model="newPlaylist.creator.email" required>
 				</label>
 				<label class="item item-input item-select">
 					<div class="input-label">
@@ -26,16 +20,15 @@
 					</div>
 					<select ng-model="novaMusica">
 						<option ng-repeat="song in songs">
-							{{song.title}}
+							{{$index}}>{{song.title}}
 						</option>
 					</select>
 				</label>
 				<button class="button button-stable button-block" ng-click="addSong(novaMusica)">Adicionar Musica na Playlist</button >
-				<button class="button button-dark button-block">Criar Playlist</button>
-				
+				<button class="button button-dark button-block" ng-click="addPlaylist()" ng-disabled="!newPlaylistForm.$valid">Criar Playlist</button>
 			</div>
-			<h3>{{novaMusica}}</h3>
 		</form>
+		  <h2>{{newPlaylist}}</h2>
 	</ion-content>
 	<div class="tabs-striped tabs-color-light tabs-background-dark">
   	<div class="tabs">
@@ -47,4 +40,5 @@
       	</a>
   	</div>
   </div>
+
 </ion-view>

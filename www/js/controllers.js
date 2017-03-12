@@ -48,18 +48,30 @@ angular.module('music.controllers', [])
 .controller('PlaylistsCtrl', function($scope, PlaylistService,SongsService) {
   $scope.playlists = [];
   $scope.songs = [];
+  $scope.newPlaylist = {
+    songs: []
+  }
   PlaylistService.getPlaylists().then(playlists => $scope.playlists = playlists);
   SongsService.getSongs().then(songsCache => $scope.songs = songsCache);
 
 
   $scope.addSong = function(song){
     if(song){
-      let newSong;
-      $scope.songs.forEach((e)=>{
-       console.log(e.title);
-      });
-      console.log(newSong);
+      let songNew = song.split('>')[0];
+      songNew = parseInt(songNew,10);
+      songNew = $scope.songs[songNew];
+      delete songNew.$$hashKey;
+      $scope.newPlaylist.songs.push(songNew);
     }
+  };
+
+  $scope.addPlaylist = function(newPlaylist){
+    console.log($scope.newPlaylist);
+    $scope.newPlaylist._id = '1';
+    $scope.newPlaylist.creator._id = '1';
+    PlaylistService.postPlaylist($scope.newPlaylist);
+
+    $scope.newPlaylist = {};
   };
   // $scope.getPlaylist = (function(){
   //   $http.get('https://mah-music-api.herokuapp.com/playlists')

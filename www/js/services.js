@@ -22,6 +22,17 @@ angular.module('music.services',[])
 			return deferred.promise;
 		},
 
+		postPlaylist: function(newPlaylist){
+			$http.post('https://mah-music-api.herokuapp.com/playlists',newPlaylist,'contenttype')
+				.success(function(data){
+					this.getPlaylists();
+					console.log('Sucesso');
+				})
+				.error(function(err){
+					console.log(err);
+				});
+		},
+
 		getPlaylist: function(id){
 			return this.getPlaylists().then(function(playlists){
 				let deferred = $q.defer();
