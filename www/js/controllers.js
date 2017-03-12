@@ -40,30 +40,27 @@ angular.module('music.controllers', [])
     }, 1000);
   };
 })
-.controller('BrowseMusicCtrl', function($scope){
-  $scope.musics = [
-    {
-      title:'The Argument 1',
-      album:'The Theory of Everything',
-      artist: 'Ayreon',
-      albumArtURL:'https://upload.wikimedia.org/wikipedia/en/thumb/2/26/Ayreon-TheoryOfEverything-cd.jpg/220px-Ayreon-TheoryOfEverything-cd.jpg'
-    },
-    {
-      title:'The Scarecrow',
-      album:'The Scarecrow',
-      artist:'Avantasia',
-      albumArtURL:'https://upload.wikimedia.org/wikipedia/en/thumb/7/7c/Avantasia_-_The_Scarecrow_-_2008._Front.jpg/220px-Avantasia_-_The_Scarecrow_-_2008._Front.jpg'
-    },
-    {
-      title:'March of Time',
-      album: 'Keeper of the Seven Keys: Part II',
-      artist:'Helloween',
-      albumArtURL:'https://upload.wikimedia.org/wikipedia/en/thumb/3/3c/KotSK2.jpg/220px-KotSK2.jpg'
-    }
-  ];
+.controller('BrowseMusicCtrl', function($scope,SongsService){
+  $scope.musics = [];
+  SongsService.getSongs().then(songsCache => $scope.musics = songsCache);
 })
-.controller('PlaylistsCtrl', function($scope, $http) {
-  
+
+.controller('PlaylistsCtrl', function($scope, PlaylistService,SongsService) {
+  $scope.playlists = [];
+  $scope.songs = [];
+  PlaylistService.getPlaylists().then(playlists => $scope.playlists = playlists);
+  SongsService.getSongs().then(songsCache => $scope.songs = songsCache);
+
+
+  $scope.addSong = function(song){
+    if(song){
+      let newSong;
+      $scope.songs.forEach((e)=>{
+       console.log(e.title);
+      });
+      console.log(newSong);
+    }
+  };
   // $scope.getPlaylist = (function(){
   //   $http.get('https://mah-music-api.herokuapp.com/playlists')
   //     .then(
@@ -77,6 +74,10 @@ angular.module('music.controllers', [])
   // })();
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-  console.log($stateParams);
+.controller('PlaylistCtrl', function($scope, $stateParams,PlaylistService) {
+  $scope.playlist = {};
+  PlaylistService.getPlaylist($stateParams.playlistId).then((playlist)=> {
+    $scope.playlist = playlist;
+  });
+  // console.log($scope.playlist);
 });

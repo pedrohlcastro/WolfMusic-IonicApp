@@ -1,0 +1,50 @@
+<ion-view view-title="Adicionar Playlist">
+	<ion-content>
+<!-- "_id": "string",
+"title": "string",
+"creator": {
+"_id": "string",
+"name": "string",
+"email": "string" -->
+		<form name="newPlaylist" ng-submit="newPlaylist.$valid && addPlaylist(newPlaylist)" novalidate>
+			<div class="list">
+				<label class="item item-input item-floating-label">
+					<span class="input-label">Nome da Playlist</span>
+					<input type="text" placeholder="Nome da Playlist" ng-mode="newPlaylist.title">
+				</label>
+				<label class="item item-input item-floating-label">
+					<span class="input-label">Seu Nome Aqui</span>
+					<input type="text" placeholder="Seu Nome Aqui" ng-model="newPlaylist.creator.name">
+				</label>
+				<label class="item item-input item-floating-label">
+					<span class="input-label">Seu Email</span>
+					<input type="email" placeholder="Seu Email" ng-model="newPlaylist.creator.email">
+				</label>
+				<label class="item item-input item-select">
+					<div class="input-label">
+						Adicionar Música:
+					</div>
+					<select ng-model="novaMusica">
+						<option ng-repeat="song in songs">
+							{{song.title}}
+						</option>
+					</select>
+				</label>
+				<button class="button button-stable button-block" ng-click="addSong(novaMusica)">Adicionar Musica na Playlist</button >
+				<button class="button button-dark button-block">Criar Playlist</button>
+				
+			</div>
+			<h3>{{novaMusica}}</h3>
+		</form>
+	</ion-content>
+	<div class="tabs-striped tabs-color-light tabs-background-dark">
+  	<div class="tabs">
+  		<a class="tab-item" href="#/main/playlists">
+        <i class="icon ion-home"></i>
+      	</a>
+      	<a class="tab-item active" href="#">
+        <i class="icon ion-plus"></i>
+      	</a>
+  	</div>
+  </div>
+</ion-view>
