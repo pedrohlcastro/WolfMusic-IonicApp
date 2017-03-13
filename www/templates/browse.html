@@ -8,10 +8,8 @@
 		</label>
   	</div>	
   	<ion-list>
-  	  	<ion-item ng-repeat="music in musics | filter: search | orderBy: title" class="item item-thumbnail-left">
-	  		<img ng-src="{{music.albumArtURL}}"/>
-	  		<h2>{{music.title}}</h3>
-	  		<h3>{{music.artist}} - {{music.album}}</h3>
+  	  	<ion-item ng-repeat="music in musics | filter: search | orderBy: title" >
+	  		 <music-tag class="item item-thumbnail-left"></music-tag>
   	  	</ion-item>
   	</ion-list>
   </ion-content>

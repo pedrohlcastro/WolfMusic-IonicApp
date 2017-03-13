@@ -8,14 +8,12 @@
     	</div>
     	<div class="item item-body">
     		<ion-list>
-    			<ion-item ng-if="playlist.songs.length" ng-repeat="song in playlist.songs" class="item item-thumbnail-left">
-    				<img ng-src="{{song.albumArtURL}}">
-    				<h3>{{song.title}}</h3>
-    				<p>{{song.artist}} - Album: {{song.album}}</p>
+    			<ion-item ng-if="playlist.songs.length" ng-repeat="music in playlist.songs" >
+    				<music-tag class="item item-thumbnail-left"></music-tag>
     			</ion-item>
     			<ion-item ng-if="!playlist.songs.length" class="item item-icon-left">
     				<i class="ion-close-round"></i>
-    				 Não a músicas nesta playlist.
+    				 Não há músicas nesta playlist.
     			</ion-item>
     		</ion-list>
     	</div>

@@ -53,8 +53,6 @@ angular.module('music.controllers', [])
   }
   PlaylistService.getPlaylists().then(playlists => $scope.playlists = playlists);
   SongsService.getSongs().then(songsCache => $scope.songs = songsCache);
-
-
   $scope.addSong = function(song){
     if(song){
       let songNew = song.split('>')[0];
