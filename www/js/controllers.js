@@ -52,14 +52,14 @@ angular.module('music.controllers', [])
     songs: []
   };
   $scope.doRefresh = function(){
-    PlaylistService.getPlaylists(true).then(playlists => $scope.playlists = playlists);  
+    PlaylistService.getPlaylists().then(playlists => $scope.playlists = playlists);  
   };    
   $scope.goToAddSong = function(i){
     let playlistId = $scope.playlists[i]._id;
     $state.go('app.addSong',{playlistId: playlistId});
   };
 
-  PlaylistService.getPlaylists(false).then(playlists => $scope.playlists = playlists);
+  PlaylistService.getPlaylists().then(playlists => $scope.playlists = playlists);
   SongsService.getSongs().then(songsCache => $scope.songs = songsCache);
   $scope.addSong = function(song){
     if(song){
