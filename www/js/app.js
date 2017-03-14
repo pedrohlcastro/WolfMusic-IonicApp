@@ -69,6 +69,15 @@ angular.module('music', ['ionic', 'music.controllers','music.services','music.di
         controller: 'PlaylistCtrl'
       }
     }
+  })
+  .state('app.addSong',{
+    url:'/playlists/add-song/:playlistId',
+    views: {
+      'mainContent':{
+        templateUrl:'templates/addSong.html',
+        controller: 'PlaylistCtrl'
+      }
+    }
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/main/playlists');

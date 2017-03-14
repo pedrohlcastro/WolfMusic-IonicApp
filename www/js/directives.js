@@ -15,7 +15,10 @@ angular.module('music.directives',[])
 		scope: {
 			home: "="
 		},
-		templateUrl: "templates/tab-playlist.html",
+		templateUrl: "templates/tabPlaylist.html",
 		controller:"PlaylistsCtrl"
 	};
-});
+})
+
+
+

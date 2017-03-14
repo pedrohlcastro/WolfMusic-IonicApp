@@ -45,13 +45,21 @@ angular.module('music.controllers', [])
   SongsService.getSongs().then(songsCache => $scope.musics = songsCache);
 })
 
-.controller('PlaylistsCtrl', function($scope, PlaylistService,SongsService) {
+.controller('PlaylistsCtrl', function($scope, PlaylistService,SongsService,$state) {
   $scope.playlists = [];
   $scope.songs = [];
   $scope.newPlaylist = {
     songs: []
-  }
-  PlaylistService.getPlaylists().then(playlists => $scope.playlists = playlists);
+  };
+  $scope.doRefresh = function(){
+    PlaylistService.getPlaylists(true).then(playlists => $scope.playlists = playlists);  
+  };    
+  $scope.goToAddSong = function(i){
+    let playlistId = $scope.playlists[i]._id;
+    $state.go('app.addSong',{playlistId: playlistId});
+  };
+
+  PlaylistService.getPlaylists(false).then(playlists => $scope.playlists = playlists);
   SongsService.getSongs().then(songsCache => $scope.songs = songsCache);
   $scope.addSong = function(song){
     if(song){
@@ -64,30 +72,35 @@ angular.module('music.controllers', [])
   };
 
   $scope.addPlaylist = function(newPlaylist){
+    //$scope.newPlaylist.creator._id = '1';
     console.log($scope.newPlaylist);
-    $scope.newPlaylist._id = '1';
-    $scope.newPlaylist.creator._id = '1';
     PlaylistService.postPlaylist($scope.newPlaylist);
 
     $scope.newPlaylist = {};
   };
-  // $scope.getPlaylist = (function(){
-  //   $http.get('https://mah-music-api.herokuapp.com/playlists')
-  //     .then(
-  //       function(res){
-  //         $scope.playlists = res.data;
-  //       },
-  //       function(err){
-  //         console.log('ERRO AO ACESSAR API');
-  //       }
-  //     );
-  // })();
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams,PlaylistService) {
+.controller('PlaylistCtrl', function($scope, $stateParams,PlaylistService,SongsService) {
   $scope.playlist = {};
+  $scope.musics = [];
+  $scope.id = $stateParams.playlistId;
+
+  $scope.doRefresh = function(){
+    PlaylistService.getPlaylist($stateParams.playlistId).then((playlist)=> {
+      $scope.playlist = playlist;
+    });    
+  }
+
   PlaylistService.getPlaylist($stateParams.playlistId).then((playlist)=> {
     $scope.playlist = playlist;
   });
-  // console.log($scope.playlist);
+  SongsService.getSongs().then(songsCache => $scope.musics = songsCache);
+  
+  $scope.removeSong = function(id){
+    PlaylistService.removeSong(id,$stateParams.playlistId);
+  }
+  $scope.addSong = function(id){
+    //console.log($scope.playlist);
+    PlaylistService.addSong(id,$stateParams.playlistId);
+  };
 });

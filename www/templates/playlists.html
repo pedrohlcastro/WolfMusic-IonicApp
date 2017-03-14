@@ -1,7 +1,10 @@
 <ion-view view-title="Playlists">
   <ion-content>
+  	<ion-refresher pulling-text="Puxe para Atualizar" on-refresh="doRefresh()">
+  	</ion-refresher>
     <ion-list>
-      <ion-item ng-repeat="playlist in playlists" href="#/main/playlists/{{playlist._id}}">
+      <ion-item ng-repeat="playlist in playlists" ng-href="#/main/playlists/{{playlist._id}}">
+      	<ion-option-button class="button-balanced ion-plus" ng-click="goToAddSong($index)">Música</ion-option-button>
         {{playlist.title}} - {{playlist.songs.length}} Músicas
       </ion-item>
     </ion-list>

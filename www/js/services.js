@@ -4,9 +4,9 @@ angular.module('music.services',[])
 	let playlistCache = null;
 
 	return {
-		getPlaylists: function(){
+		getPlaylists: function(refresh){
 			let deferred = $q.defer();
-			if(!playlistCache){
+			if(!playlistCache || refresh){
 				$http.get('https://mah-music-api.herokuapp.com/playlists')
 					.success(function(data){
 						playlistCache = data;
@@ -23,7 +23,7 @@ angular.module('music.services',[])
 		},
 
 		postPlaylist: function(newPlaylist){
-			$http.post('https://mah-music-api.herokuapp.com/playlists',newPlaylist,'contenttype')
+			$http.post('https://mah-music-api.herokuapp.com/playlists',JSON.stringify(newPlaylist),{headers: {'Content-Type': 'application/json'}})
 				.success(function(data){
 					this.getPlaylists();
 					console.log('Sucesso');
@@ -45,6 +45,29 @@ angular.module('music.services',[])
 					deferred.reject('Playlist Errada');
 				return deferred.promise;
 			});
+		},
+
+		addSong: function(songId,playlistId){
+			let postUrl = 'https://mah-music-api.herokuapp.com/playlists/'+playlistId+'/songs/'+songId;
+			$http.post(postUrl)
+				.success(function(){
+					console.log("success");
+				})
+				.error(function(err){
+					console.log(err);
+				});
+		},
+
+		removeSong: function(songId,playlistId){
+			let postUrl = 'https://mah-music-api.herokuapp.com/playlists/'+playlistId+'/songs/'+songId;
+			$http.delete(postUrl)
+				.success(function(){
+					console.log("success");
+				})
+				.error(function(err){
+					console.log(err);
+			});
+
 		}
 	}
 })

@@ -1,0 +1,21 @@
+<ion-view view-title="Adicionar Musica">
+	<ion-content>
+		<div class="header has-header" align="center">
+			<h2 class="title">Você ira adicionar músicas na playlist:{{playlist.title}}</h2>
+		</div>
+		
+		
+		<div class="list list-inset">
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Busca" ng-model="search">
+			</label>
+		</div>	
+		<ion-list>
+			<ion-item ng-repeat="music in musics | filter: search | orderBy: title" >
+				<ion-option-button class="button-balanced ion-plus" ng-click="addSong(music._id)"></ion-option-button>
+				<music-tag class="item item-thumbnail-left"></music-tag>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>
