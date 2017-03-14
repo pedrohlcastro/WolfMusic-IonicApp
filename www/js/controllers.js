@@ -98,9 +98,18 @@ angular.module('music.controllers', [])
   
   $scope.removeSong = function(id){
     PlaylistService.removeSong(id,$stateParams.playlistId);
+    let song = $scope.musics.filter(function(music){
+      return music._id == id;
+    })[0];
+    let index = $scope.playlist.songs.indexOf[song];
+    $scope.playlist.songs.splice(song,1);
   }
   $scope.addSong = function(id){
     //console.log($scope.playlist);
     PlaylistService.addSong(id,$stateParams.playlistId);
+    let song = $scope.musics.filter(function(music){
+      return music._id == id;
+    })[0];
+    $scope.playlist.songs.push(song);
   };
 });
