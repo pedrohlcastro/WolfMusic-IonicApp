@@ -94,6 +94,7 @@ angular.module('music.controllers', [])
   PlaylistService.getPlaylist($stateParams.playlistId).then((playlist)=> {
     $scope.playlist = playlist;
   });
+  
   SongsService.getSongs().then(songsCache => $scope.musics = songsCache);
   
   $scope.removeSong = function(id){
@@ -104,8 +105,8 @@ angular.module('music.controllers', [])
     let index = $scope.playlist.songs.indexOf[song];
     $scope.playlist.songs.splice(song,1);
   }
+
   $scope.addSong = function(id){
-    //console.log($scope.playlist);
     PlaylistService.addSong(id,$stateParams.playlistId);
     let song = $scope.musics.filter(function(music){
       return music._id == id;
